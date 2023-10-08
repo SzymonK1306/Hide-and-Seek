@@ -13,7 +13,7 @@ public class SeekerAgent : Agent
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
-    Rigidbody rBody;
+    public Rigidbody rBody;
 
     public Vector3 startPos;
 
@@ -22,10 +22,11 @@ public class SeekerAgent : Agent
     {
        rBody = GetComponent<Rigidbody>();
        // rBody.freezeRotation = true;
+       startPos = orientation.position;
     }
 
     // public Transform Target;
-    public override void OnEpisodeBegin()
+/*    public override void OnEpisodeBegin()
     {
         this.rBody.velocity = Vector3.zero;
         // Move the target to a new spot
@@ -34,12 +35,12 @@ public class SeekerAgent : Agent
 
         orientation.position = startPosition;
         orientation.rotation = randomRotation;
-    }
+    }*/
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // Position
-        sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(this.transform.localPosition / 25.0f);
 
         // Velocity
         sensor.AddObservation(rBody.velocity.x);
@@ -76,10 +77,10 @@ public class SeekerAgent : Agent
     void OnCollisionEnter(Collision collision)
     {
         // Punish for colliding walls
-        if (collision.gameObject.CompareTag("Wall"))
+/*        if (collision.gameObject.CompareTag("Wall"))
         {
             AddReward(-1.0f);
-        }
+        }*/
 /*        if (collision.gameObject.CompareTag("Hider"))
         {
             AddReward(50.0f);

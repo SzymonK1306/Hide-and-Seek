@@ -13,14 +13,14 @@ public class HiderAgent : Agent
     float horizontalInput;
     float verticalInput;
     Vector3 moveDirection;
-    private Rigidbody rBody;
+    public Rigidbody rBody;
     private Collider agentCollider;
     private MeshRenderer meshRenderer;
 
-    private bool wallCollision = false;
+/*    private bool wallCollision = false;
     private bool seekerCollision = false;
 
-    private bool active = true;
+    private bool active = true;*/
 
     public Vector3 startPos;
 
@@ -28,13 +28,14 @@ public class HiderAgent : Agent
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
-        agentCollider = GetComponent<Collider>();
-        meshRenderer = GetComponent<MeshRenderer>();
-       // rBody.freezeRotation = true;
+        startPos = orientation.position;
+        /*        agentCollider = GetComponent<Collider>();
+                meshRenderer = GetComponent<MeshRenderer>();*/
+        // rBody.freezeRotation = true;
     }
 
     // public Transform Target;
-    public override void OnEpisodeBegin()
+/*    public override void OnEpisodeBegin()
     {
         this.rBody.velocity = Vector3.zero;
         // Move the target to a new spot
@@ -42,17 +43,17 @@ public class HiderAgent : Agent
         Quaternion randomRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
 
         //rBody.enabled = true;
-        agentCollider.enabled = true;
-        meshRenderer.enabled = true;
+*//*        agentCollider.enabled = true;
+        meshRenderer.enabled = true;*//*
 
         orientation.position = startPosition;
         orientation.rotation = randomRotation;
-    }
+    }*/
 
     public override void CollectObservations(VectorSensor sensor)
     {
         // Position
-        sensor.AddObservation(this.transform.localPosition);
+        sensor.AddObservation(this.transform.localPosition / 25.0f);
 
         // Velocity
         sensor.AddObservation(rBody.velocity.x);
@@ -90,10 +91,10 @@ public class HiderAgent : Agent
     void OnCollisionEnter(Collision collision)
     {
         // Punish for colliding walls
-        if (collision.gameObject.CompareTag("Wall"))
+/*        if (collision.gameObject.CompareTag("Wall"))
         {
             AddReward(-1.0f);
-        }
+        }*/
 /*        if (collision.gameObject.CompareTag("Seeker"))
         {
             active = false;

@@ -1,4 +1,5 @@
 using Google.Protobuf.WellKnownTypes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,13 +27,15 @@ public class HideAndSeekController : MonoBehaviour
     // Ray
     public RayPerceptionSensorComponent3D raySensor3d;
 
+    bool seekerWin = false;
+
     // Start is called before the first frame update
     void Start()
     {
         HideGroup = new SimpleMultiAgentGroup();
         SeekGroup = new SimpleMultiAgentGroup();
 
-        foreach (Agent agent in Hiders)
+        foreach (HiderAgent agent in Hiders)
         {
             HideGroup.RegisterAgent(agent);
         }
@@ -65,29 +68,38 @@ public class HideAndSeekController : MonoBehaviour
             foreach (var seeker in Seekers)
             {
                 seeker.gameObject.SetActive(true);
+                SeekGroup.RegisterAgent(seeker);
             }
             
             // Debug.Log("Start");
         }
         if (seekerActive)
         {
-            bool seekerWin = false;
+            
             // Debug.Log(current_step);
             foreach (var seeker in Seekers)
             {
-                RayPerceptionSensor raySensor = raySensor3d.RaySensor;
-                RayPerceptionOutput output = raySensor.RayPerceptionOutput;
-                RayPerceptionOutput.RayOutput[] rays = output.RayOutputs;
-
-                foreach (var observation in rays)
+                try
                 {
-                    int tag = observation.HitTagIndex;
-                    if (tag == 1)
+                    RayPerceptionSensor raySensor = raySensor3d.RaySensor;
+                    RayPerceptionOutput output = raySensor.RayPerceptionOutput;
+                    RayPerceptionOutput.RayOutput[] rays = output.RayOutputs;
+
+                    foreach (var observation in rays)
                     {
-                        seekerWin = true;
-                        break;
+                        int tag = observation.HitTagIndex;
+                        if (tag == 1)
+                        {
+                            seekerWin = true;
+                            break;
+                        }
                     }
                 }
+                catch (NullReferenceException) 
+                {
+
+                }
+
 
             }
             if (seekerWin)
@@ -111,11 +123,26 @@ public class HideAndSeekController : MonoBehaviour
     void ResetEnv()
     {
         current_step = 0;
+        seekerWin = false;
 
         seekerActive = false;
-        foreach (var seeker in Seekers)
+        foreach (HiderAgent hider in Hiders)
+        {
+            hider.gameObject.SetActive(false);
+            hider.orientation.position = hider.startPos;
+            hider.orientation.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+            hider.rBody.velocity = Vector3.zero;
+            hider.rBody.angularVelocity = Vector3.zero;
+            hider.gameObject.SetActive(true);
+            HideGroup.RegisterAgent(hider);
+        }
+        foreach (SeekerAgent seeker in Seekers)
         {
             seeker.gameObject.SetActive(false);
+            seeker.orientation.position = seeker.startPos;
+            seeker.orientation.rotation = Quaternion.Euler(0f, 180f, 0f);
+            seeker.rBody.velocity = Vector3.zero;
+            seeker.rBody.angularVelocity = Vector3.zero;
         }
     }
 }

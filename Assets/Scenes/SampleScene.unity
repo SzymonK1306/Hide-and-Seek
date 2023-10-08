@@ -302,7 +302,8 @@ MonoBehaviour:
   MaxStep: 0
   moveSpeed: 10
   orientation: {fileID: 162442351}
-  startPos: {x: -3.62, y: 1, z: 2.43}
+  rBody: {fileID: 0}
+  startPos: {x: -6.62, y: 1, z: 2.43}
 --- !u!4 &162442351
 Transform:
   m_ObjectHideFlags: 0
@@ -312,7 +313,7 @@ Transform:
   m_GameObject: {fileID: 162442349}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4.09, y: 1, z: 2.14}
+  m_LocalPosition: {x: -6.7, y: 1, z: 2.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -356,7 +357,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 17e9988aabba2b142bfa3724d187922b, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: HiderBehavior
@@ -934,8 +935,8 @@ Transform:
   m_GameObject: {fileID: 550444231}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.45857155, y: 0, z: 3}
-  m_LocalScale: {x: 7, y: 1, z: 0.14285709}
+  m_LocalPosition: {x: -0.47, y: 0, z: 1.66}
+  m_LocalScale: {x: 3.5, y: 1, z: 0.14285709}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2122806312}
@@ -1271,8 +1272,8 @@ Transform:
   m_GameObject: {fileID: 767755288}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.23, y: 0, z: -0.14}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 228208447}
@@ -1586,8 +1587,8 @@ Transform:
   m_GameObject: {fileID: 909964571}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.23, y: 0, z: 0}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 122855978}
@@ -1877,8 +1878,8 @@ Transform:
   m_GameObject: {fileID: 981818348}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.45857155, y: 0, z: 3}
-  m_LocalScale: {x: 7, y: 1, z: 0.14285709}
+  m_LocalPosition: {x: -0.46, y: 0, z: 1.59}
+  m_LocalScale: {x: 3.5, y: 1, z: 0.14285709}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 122855978}
@@ -2634,8 +2635,8 @@ Transform:
   m_GameObject: {fileID: 1276775196}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.19, y: 0, z: -0.14}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 585673737}
@@ -3010,7 +3011,8 @@ MonoBehaviour:
   MaxStep: 0
   moveSpeed: 10
   orientation: {fileID: 1382832887}
-  startPos: {x: 0, y: 1, z: -6.21}
+  rBody: {fileID: 0}
+  startPos: {x: 0, y: 1, z: -23}
 --- !u!114 &1382832882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3033,7 +3035,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: e6d2ca3bcc1fda74fae3cd859f09a00b, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: SeekerBehavior
@@ -3150,7 +3152,7 @@ Transform:
   m_GameObject: {fileID: 1382832879}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.28, y: 1, z: -6.21}
+  m_LocalPosition: {x: 0.4, y: 1, z: -23.3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3309,7 +3311,7 @@ Transform:
   m_GameObject: {fileID: 1428250928}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.62, y: 1, z: 2.43}
+  m_LocalPosition: {x: 6.62, y: 1, z: 2.43}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3435,7 +3437,8 @@ MonoBehaviour:
   MaxStep: 0
   moveSpeed: 10
   orientation: {fileID: 1428250929}
-  startPos: {x: 3.62, y: 1, z: 2.43}
+  rBody: {fileID: 0}
+  startPos: {x: 6.62, y: 1, z: 2.43}
 --- !u!114 &1428250938
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3458,7 +3461,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 17e9988aabba2b142bfa3724d187922b, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: HiderBehavior
@@ -3613,8 +3616,8 @@ Transform:
   m_GameObject: {fileID: 1569752756}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.45857155, y: 0, z: 3}
-  m_LocalScale: {x: 7, y: 1, z: 0.14285709}
+  m_LocalPosition: {x: -0.44, y: 0, z: 1.8}
+  m_LocalScale: {x: 3.5, y: 1, z: 0.14285709}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 228208447}
@@ -3744,8 +3747,8 @@ MonoBehaviour:
   - {fileID: 162442350}
   Seekers:
   - {fileID: 1382832881}
-  max_steps: 15000
-  sleep_steps: 2500
+  max_steps: 1200
+  sleep_steps: 0
   raySensor3d: {fileID: 1144575882}
 --- !u!1 &1618234039
 GameObject:
@@ -3880,8 +3883,8 @@ Transform:
   m_GameObject: {fileID: 1641906280}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.45857155, y: 0, z: 3}
-  m_LocalScale: {x: 7, y: 1, z: 0.14285709}
+  m_LocalPosition: {x: -0.45, y: 0, z: 1.59}
+  m_LocalScale: {x: 3.5, y: 1, z: 0.14285709}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 585673737}
@@ -3985,8 +3988,8 @@ Transform:
   m_GameObject: {fileID: 1655495579}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.21, y: 0, z: -0.07}
+  m_LocalScale: {x: 0.5, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2122806312}
