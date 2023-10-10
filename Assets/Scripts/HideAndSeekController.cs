@@ -47,10 +47,10 @@ public class HideAndSeekController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         current_step++;
-        // Debug.Log(current_step);
+        //Debug.Log("Agent" + current_step);
 
         /*        foreach (Agent seeker in Seekers)
                 {

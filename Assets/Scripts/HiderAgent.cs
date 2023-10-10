@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using Unity.MLAgents.Actuators;
+using static UnityEngine.GraphicsBuffer;
 
 public class HiderAgent : Agent
 {
@@ -28,7 +29,7 @@ public class HiderAgent : Agent
     void Start()
     {
         rBody = GetComponent<Rigidbody>();
-        startPos = orientation.position;
+        startPos = this.transform.localPosition;
         /*        agentCollider = GetComponent<Collider>();
                 meshRenderer = GetComponent<MeshRenderer>();*/
         // rBody.freezeRotation = true;
@@ -148,6 +149,13 @@ public class HiderAgent : Agent
             continuousActions[2] = 1f; // Rotate clockwise
         }
 
+    }
+
+    public void calculateDistReward()
+    {
+        float totalDistance = Vector3.Distance(this.transform.localPosition, startPos);
+        Debug.Log(totalDistance);
+        AddReward(totalDistance / 2f);
     }
 }
 

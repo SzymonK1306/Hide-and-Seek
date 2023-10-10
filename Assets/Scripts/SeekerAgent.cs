@@ -56,7 +56,7 @@ public class SeekerAgent : Agent
         // rBody.AddForce(controlSignal * forceMultiplier);
         // Get the continuous actions.
         //Debug.Log(this.GetCumulativeReward());
-        // Debug.Log(this.StepCount);
+        //Debug.Log(this.StepCount);
 
         float moveX = actions.ContinuousActions[0]; // Move left or right.
         float moveY = actions.ContinuousActions[1]; // Move forward or backward.
