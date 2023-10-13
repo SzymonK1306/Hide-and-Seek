@@ -24,6 +24,7 @@ public class HiderAgent : Agent
     private bool active = true;*/
 
     public Vector3 startPos;
+    // private Vector3 lastPos;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +73,11 @@ public class HiderAgent : Agent
         // Debug.Log(this.GetCumulativeReward());
         // Debug.Log(this.StepCount);
 
+        // DISTANCE REWARD
+/*        Vector3 currentPosition = transform.localPosition;
+        float distance = Vector3.Distance(lastPos, currentPosition);
+        Debug.Log(distance);*/
+
         float moveX = actions.ContinuousActions[0]; // Move left or right.
         float moveY = actions.ContinuousActions[1]; // Move forward or backward.
         float rotate = actions.ContinuousActions[2]; // Rotate clockwise or counterclockwise.
@@ -84,6 +90,8 @@ public class HiderAgent : Agent
 
         // Apply rotation to the agent.
         transform.Rotate(Vector3.up * rotate * Time.fixedDeltaTime * 100f);
+
+        //lastPos = currentPosition;
   
 
 
@@ -154,7 +162,7 @@ public class HiderAgent : Agent
     public void calculateDistReward()
     {
         float totalDistance = Vector3.Distance(this.transform.localPosition, startPos);
-        Debug.Log(totalDistance);
+        // Debug.Log(totalDistance);
         AddReward(totalDistance / 2f);
     }
 }

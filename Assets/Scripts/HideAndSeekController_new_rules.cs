@@ -30,6 +30,10 @@ public class HideAndSeekController_new_rules : MonoBehaviour
 
     // Fake seeker
     public GameObject fakeSeeker;
+    private bool fakeSeekerActive = false;
+
+    // Last seen hider
+    string lastSeenHider = "";
 
     // Start is called before the first frame update
     void Start()
@@ -55,23 +59,26 @@ public class HideAndSeekController_new_rules : MonoBehaviour
         current_step++;
         //Debug.Log("Agent" + current_step);
 
-/*        foreach (HiderAgent hider in Hiders)
+        /*        foreach (HiderAgent hider in Hiders)
+                {
+                    Debug.Log(hider.startPos);
+                }*/
+        if (((current_step + 25) > sleep_steps) && !fakeSeekerActive)
         {
-            Debug.Log(hider.startPos);
-        }*/
+            fakeSeekerActive = true;
+            fakeSeeker.SetActive(false);
 
+        }
         // Sleep seeker at the start
         if ((current_step > sleep_steps) && !seekerActive)
         {
             seekerActive = true;
-            fakeSeeker.SetActive(false);
             foreach (var seeker in Seekers)
             {
                 seeker.gameObject.SetActive(true);
                 SeekGroup.RegisterAgent(seeker);
             }
 
-            // Debug.Log("Start");
         }
         if (seekerActive)
         {
@@ -91,8 +98,9 @@ public class HideAndSeekController_new_rules : MonoBehaviour
                         int tag = observation.HitTagIndex;
                         if (tag == 1)
                         {
+                            
                             GameObject HiderObj = observation.HitGameObject;
-                            if (HiderObj != null)
+                            if ((HiderObj != null) && (HiderObj.name != lastSeenHider))
                             {
                                 HiderAgent hider = HiderObj.GetComponent<HiderAgent>();
                                 hider.calculateDistReward();
@@ -101,9 +109,10 @@ public class HideAndSeekController_new_rules : MonoBehaviour
                                 SeekGroup.AddGroupReward(50.0f);
                                 HideGroup.AddGroupReward(-50.0f);
                                 found = true;
+                                lastSeenHider = HiderObj.name;
+                                // Debug.Log("id " + lastSeenHider);
                                 break;
                             }
-
                         }
                         if (found)
                         {
@@ -148,8 +157,11 @@ public class HideAndSeekController_new_rules : MonoBehaviour
         current_step = 0;
         // seekerWin = false;
         leftHiders = Hiders.Count;
+        // Debug.Log(leftHiders);
+        lastSeenHider = "";
 
         seekerActive = false;
+        fakeSeekerActive = false;
         foreach (HiderAgent hider in Hiders)
         {
             hider.gameObject.SetActive(false);
@@ -164,7 +176,7 @@ public class HideAndSeekController_new_rules : MonoBehaviour
         foreach (SeekerAgent seeker in Seekers)
         {
             seeker.gameObject.SetActive(false);
-            seeker.orientation.position = seeker.startPos;
+            seeker.orientation.localPosition = seeker.startPos;
             seeker.orientation.rotation = Quaternion.Euler(0f, 180f, 0f);
             seeker.rBody.velocity = Vector3.zero;
             seeker.rBody.angularVelocity = Vector3.zero;
