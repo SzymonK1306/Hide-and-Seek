@@ -75,7 +75,7 @@ public class SeekerAgent : Agent
         // Apply rotation to the agent.
         transform.Rotate(Vector3.up * rotate * Time.fixedDeltaTime * 100f);
         distance_total += Vector3.Distance(this.transform.localPosition, lastPos) / 20;
-        AddReward(Vector3.Distance(this.transform.localPosition, lastPos) / 20);
+        AddReward(Vector3.Distance(this.transform.localPosition, lastPos) / 5);
         lastPos = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, this.transform.localPosition.z);
         // Debug.Log("Last Position: " + distance_total);
 /*        Debug.Log("Current Position: " + this.transform.localPosition);

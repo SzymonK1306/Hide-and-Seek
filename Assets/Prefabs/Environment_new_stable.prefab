@@ -974,7 +974,7 @@ MonoBehaviour:
   Seekers:
   - {fileID: 5174768165067316207}
   max_steps: 2500
-  sleep_steps: 1000
+  sleep_steps: 0
   raySensor3d: {fileID: 9153077937906442362}
   fakeSeeker: {fileID: 5401022415479852009}
 --- !u!1 &1497814835671645589
@@ -3324,7 +3324,7 @@ Transform:
   m_GameObject: {fileID: 5401022415479852009}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.08, z: -18}
+  m_LocalPosition: {x: 0, y: 1.08, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4107,7 +4107,7 @@ Transform:
   m_GameObject: {fileID: 7186555013210423115}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.08, z: -18}
+  m_LocalPosition: {x: -0.2, y: 1.08, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4265,6 +4265,7 @@ MonoBehaviour:
   orientation: {fileID: 4232443548923350278}
   rBody: {fileID: 1013783844756646884}
   startPos: {x: 0, y: 1, z: -16.5}
+  lastPos: {x: 0, y: 0, z: 0}
 --- !u!114 &4448040687130223842
 MonoBehaviour:
   m_ObjectHideFlags: 0
