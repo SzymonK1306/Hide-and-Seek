@@ -17,6 +17,7 @@ public class HiderAgent : Agent
     public Rigidbody rBody;
     private Collider agentCollider;
     private MeshRenderer meshRenderer;
+    public float maxDistance = 0f;
 
 /*    private bool wallCollision = false;
     private bool seekerCollision = false;
@@ -31,6 +32,7 @@ public class HiderAgent : Agent
     {
         rBody = GetComponent<Rigidbody>();
         startPos = this.transform.localPosition;
+        maxDistance = 0f;
         /*        agentCollider = GetComponent<Collider>();
                 meshRenderer = GetComponent<MeshRenderer>();*/
         // rBody.freezeRotation = true;
@@ -84,7 +86,13 @@ public class HiderAgent : Agent
 
         // Calculate movement direction.
         moveDirection = transform.forward * moveY + transform.right * moveX;
-            
+
+        float totalDistance = Vector3.Distance(this.transform.localPosition, startPos);
+        if (totalDistance > maxDistance)
+        {
+            maxDistance = totalDistance;
+        }
+
         // Apply force to the Rigidbody for movement.
         rBody.AddForce(moveDirection.normalized * moveSpeed, ForceMode.Force);
 
@@ -161,9 +169,10 @@ public class HiderAgent : Agent
 
     public void calculateDistReward()
     {
-        float totalDistance = Vector3.Distance(this.transform.localPosition, startPos);
+        //float totalDistance = Vector3.Distance(this.transform.localPosition, startPos);
         // Debug.Log(totalDistance);
-        AddReward(totalDistance / 2f);
+        // Debug.Log(maxDistance);
+        AddReward(maxDistance / 2f);
     }
 }
 

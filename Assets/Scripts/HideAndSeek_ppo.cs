@@ -107,7 +107,7 @@ public class HideAndSeek_ppo : MonoBehaviour
                             HiderObj.SetActive(false);
                             leftHiders--;
                             Seeker.AddReward(50.0f);
-                            Debug.Log(Seeker.GetCumulativeReward());
+                            // Debug.Log(Seeker.GetCumulativeReward());
                             HideGroup.AddGroupReward(-50.0f);
                             found = true;
                             lastSeenHider = HiderObj.name;
@@ -167,6 +167,7 @@ public class HideAndSeek_ppo : MonoBehaviour
         {
             hider.gameObject.SetActive(false);
             hider.orientation.localPosition = hider.startPos;
+            hider.maxDistance = 0f;
             // hider.orientation.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
             hider.orientation.rotation = Quaternion.Euler(0f, 0f, 0f);
             hider.rBody.velocity = Vector3.zero;
