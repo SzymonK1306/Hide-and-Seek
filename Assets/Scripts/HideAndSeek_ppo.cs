@@ -30,11 +30,15 @@ public class HideAndSeek_ppo : MonoBehaviour
     int leftHiders = 0;
 
     // Fake seeker
-    // public GameObject fakeSeeker;
-    // private bool fakeSeekerActive = false;
+    public GameObject fakeSeeker;
+    private bool fakeSeekerActive = false;
 
     // Last seen hider
     string lastSeenHider = "";
+
+    // Random possitions
+    public List<GameObject> seekerPossitions = new List<GameObject>();
+    public List<GameObject> hiderPossitions = new List<GameObject>();
 
     // Start is called before the first frame update
     void Start()
@@ -51,7 +55,8 @@ public class HideAndSeek_ppo : MonoBehaviour
             SeekGroup.RegisterAgent(seeker);
         }*/
 
-        ResetEnv();
+
+    ResetEnv();
     }
 
     // Update is called once per frame
@@ -64,12 +69,12 @@ public class HideAndSeek_ppo : MonoBehaviour
                 {
                     Debug.Log(hider.startPos);
                 }*/
-/*        if (((current_step + 25) > sleep_steps) && !fakeSeekerActive)
+        if (((current_step + 25) > sleep_steps) && !fakeSeekerActive)
         {
             fakeSeekerActive = true;
             fakeSeeker.SetActive(false);
 
-        }*/
+        }
         // Sleep seeker at the start
         if ((current_step > sleep_steps) && !seekerActive)
         {
@@ -162,26 +167,56 @@ public class HideAndSeek_ppo : MonoBehaviour
         lastSeenHider = "";
 
         seekerActive = false;
-        // fakeSeekerActive = false;
+        fakeSeekerActive = false;
+        List<Vector3> hiderNewPos = GetRandomPositions();
         foreach (HiderAgent hider in Hiders)
         {
+            int currentIndex = Hiders.IndexOf(hider);
             hider.gameObject.SetActive(false);
-            hider.orientation.localPosition = hider.startPos;
+            // hider.orientation.localPosition = hider.startPos;
+            hider.orientation.localPosition = hiderNewPos[currentIndex];
             hider.maxDistance = 0f;
-            // hider.orientation.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
-            hider.orientation.rotation = Quaternion.Euler(0f, 0f, 0f);
+            hider.orientation.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+            // hider.orientation.rotation = Quaternion.Euler(0f, 0f, 0f);
             hider.rBody.velocity = Vector3.zero;
             hider.rBody.angularVelocity = Vector3.zero;
             hider.gameObject.SetActive(true);
             HideGroup.RegisterAgent(hider);
         }
 
+        System.Random random = new System.Random();
+        GameObject obj1 = seekerPossitions[random.Next(seekerPossitions.Count)];
+        Vector3 pos = obj1.transform.localPosition;
+
         Seeker.gameObject.SetActive(false);
-        Seeker.orientation.localPosition = Seeker.startPos;
-        Seeker.orientation.rotation = Quaternion.Euler(0f, 180f, 0f);
+        // Seeker.orientation.localPosition = Seeker.startPos;
+        Seeker.orientation.localPosition = pos;
+        fakeSeeker.transform.localPosition = pos;
+        Seeker.orientation.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
         Seeker.rBody.velocity = Vector3.zero;
         Seeker.rBody.angularVelocity = Vector3.zero;
         
-        // fakeSeeker.SetActive(true);
+        fakeSeeker.SetActive(true);
+    }
+
+    public List<Vector3> GetRandomPositions()
+    {
+        List<Vector3> randomPositions = new List<Vector3>();
+
+        System.Random random = new System.Random();
+
+        GameObject obj1, obj2;
+
+        do
+        {
+            obj1 = hiderPossitions[random.Next(hiderPossitions.Count)];
+            obj2 = hiderPossitions[random.Next(hiderPossitions.Count)];
+        } while (obj1.GetInstanceID() == obj2.GetInstanceID());
+
+        randomPositions.Add(obj1.transform.localPosition);
+        randomPositions.Add(obj2.transform.localPosition);
+
+
+        return randomPositions;
     }
 }
