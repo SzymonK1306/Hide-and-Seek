@@ -176,7 +176,7 @@ public class HideAndSeek_ppo : MonoBehaviour
             // hider.orientation.localPosition = hider.startPos;
             hider.orientation.localPosition = hiderNewPos[currentIndex];
             hider.maxDistance = 0f;
-            hider.orientation.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+            hider.orientation.rotation = Quaternion.Euler(0f, 0f, 0f);
             // hider.orientation.rotation = Quaternion.Euler(0f, 0f, 0f);
             hider.rBody.velocity = Vector3.zero;
             hider.rBody.angularVelocity = Vector3.zero;
@@ -184,15 +184,15 @@ public class HideAndSeek_ppo : MonoBehaviour
             HideGroup.RegisterAgent(hider);
         }
 
-        System.Random random = new System.Random();
-        GameObject obj1 = seekerPossitions[random.Next(seekerPossitions.Count)];
-        Vector3 pos = obj1.transform.localPosition;
+/*        System.Random random = new System.Random();
+        GameObject obj1 = seekerPossitions[random.Next(seekerPossitions.Count)];*/
+        Vector3 pos = Seeker.startPos;
 
         Seeker.gameObject.SetActive(false);
         // Seeker.orientation.localPosition = Seeker.startPos;
         Seeker.orientation.localPosition = pos;
         fakeSeeker.transform.localPosition = pos;
-        Seeker.orientation.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
+        Seeker.orientation.rotation = Quaternion.Euler(0f, 180.0f, 0f);
         Seeker.rBody.velocity = Vector3.zero;
         Seeker.rBody.angularVelocity = Vector3.zero;
         
