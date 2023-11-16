@@ -5,6 +5,8 @@ using Unity.MLAgents.Sensors;
 using Unity.MLAgents;
 using UnityEngine;
 using Grpc.Core;
+using Unity.VisualScripting;
+using static UnityEditor.PlayerSettings;
 
 public class HideAndSeek_ppo : MonoBehaviour
 {
@@ -15,7 +17,8 @@ public class HideAndSeek_ppo : MonoBehaviour
 
     // Lists
     public List<Agent> Hiders;
-    public SeekerAgent Seeker;
+    public List<SeekerAgent> Seekers;
+    // public SeekerAgent Seeker;
 
     // Max Steps
     public int max_steps = 2500;
@@ -24,13 +27,14 @@ public class HideAndSeek_ppo : MonoBehaviour
     private bool seekerActive = false;
 
     // Ray
-    public RayPerceptionSensorComponent3D raySensor3d;
+    // public RayPerceptionSensorComponent3D raySensor3d;
 
     // bool seekerWin = false;
     int leftHiders = 0;
 
     // Fake seeker
-    public GameObject fakeSeeker;
+    public List<GameObject> fakeSeekers;
+    // public GameObject fakeSeeker;
     private bool fakeSeekerActive = false;
 
     // Last seen hider
@@ -56,7 +60,7 @@ public class HideAndSeek_ppo : MonoBehaviour
         }*/
 
 
-    ResetEnv();
+        ResetEnv();
     }
 
     // Update is called once per frame
@@ -69,17 +73,27 @@ public class HideAndSeek_ppo : MonoBehaviour
                 {
                     Debug.Log(hider.startPos);
                 }*/
+
+        // Delete fake seekers
         if (((current_step + 25) > sleep_steps) && !fakeSeekerActive)
         {
             fakeSeekerActive = true;
-            fakeSeeker.SetActive(false);
+            foreach (GameObject fakeSeeker in fakeSeekers)
+            {
+                fakeSeeker.SetActive(false);
+            }
+            
 
         }
         // Sleep seeker at the start
         if ((current_step > sleep_steps) && !seekerActive)
         {
             seekerActive = true;
-            Seeker.gameObject.SetActive(true);
+            foreach (SeekerAgent Seeker in Seekers)
+            {
+                Seeker.gameObject.SetActive(true);
+            }
+            
             /*            foreach (var seeker in Seekers)
                         {
                             seeker.gameObject.SetActive(true);
@@ -89,53 +103,70 @@ public class HideAndSeek_ppo : MonoBehaviour
         }
         if (seekerActive)
         {
-
-            // Debug.Log(current_step);
-            try
+            float currentReward = 0f;
+            foreach (SeekerAgent Seeker in Seekers)
             {
-                RayPerceptionSensor raySensor = raySensor3d.RaySensor;
-                RayPerceptionOutput output = raySensor.RayPerceptionOutput;
-                RayPerceptionOutput.RayOutput[] rays = output.RayOutputs;
-
-                foreach (var observation in rays)
+                try
                 {
-                    bool found = false;
-                    int tag = observation.HitTagIndex;
-                    if (tag == 1)
-                    {
+                    Transform lidar_transform = Seeker.transform.Find("Lidar");
 
-                        GameObject HiderObj = observation.HitGameObject;
-                        if ((HiderObj != null) && (HiderObj.name != lastSeenHider))
+                    GameObject lidar = lidar_transform.gameObject;
+                    
+                    RayPerceptionSensorComponent3D raySensor3d = lidar.GetComponent<RayPerceptionSensorComponent3D>();
+                    RayPerceptionSensor raySensor = raySensor3d.RaySensor;
+                    RayPerceptionOutput output = raySensor.RayPerceptionOutput;
+                    RayPerceptionOutput.RayOutput[] rays = output.RayOutputs;
+
+                    foreach (var observation in rays)
+                    {
+                        bool found = false;
+                        int tag = observation.HitTagIndex;
+                        if (tag == 1)
                         {
-                            HiderAgent hider = HiderObj.GetComponent<HiderAgent>();
-                            hider.calculateDistReward();
-                            HiderObj.SetActive(false);
-                            leftHiders--;
-                            Seeker.AddReward(50.0f);
-                            // Debug.Log(Seeker.GetCumulativeReward());
-                            HideGroup.AddGroupReward(-50.0f);
-                            found = true;
-                            lastSeenHider = HiderObj.name;
-                            // Debug.Log("id " + lastSeenHider);
+
+                            GameObject HiderObj = observation.HitGameObject;
+                            if ((HiderObj != null) && (HiderObj.name != lastSeenHider))
+                            {
+                                HiderAgent hider = HiderObj.GetComponent<HiderAgent>();
+                                hider.calculateDistReward();
+                                HiderObj.SetActive(false);
+                                leftHiders--;
+                                // Seeker.AddReward(50.0f);
+                                currentReward += 50f;
+                                // Debug.Log(Seeker.GetCumulativeReward());
+                                HideGroup.AddGroupReward(-50.0f);
+                                found = true;
+                                lastSeenHider = HiderObj.name;
+                                // Debug.Log("id " + lastSeenHider);
+                                break;
+                            }
+                        }
+                        if (found)
+                        {
                             break;
                         }
                     }
-                    if (found)
-                    {
-                        break;
-                    }
+                }
+                catch (NullReferenceException)
+                {
+
                 }
             }
-            catch (NullReferenceException)
+            // Debug.Log(current_step);
+
+            foreach (SeekerAgent Seeker in Seekers)
             {
-
+                Seeker.AddReward(currentReward);
             }
-
 
             
             if (leftHiders <= 0)
             {
-                Seeker.EndEpisode();
+                foreach (SeekerAgent Seeker in Seekers)
+                {
+                    // Debug.Log(Seeker.GetCumulativeReward());
+                    Seeker.EndEpisode();
+                }
                 HideGroup.EndGroupEpisode();
                 ResetEnv();
             }
@@ -151,8 +182,13 @@ public class HideAndSeek_ppo : MonoBehaviour
             }
             float reward = leftHiders * 50.0f;
             // Debug.Log("Reward" + reward);
-            Seeker.AddReward(reward * (-1));
-            Seeker.EndEpisode();
+            foreach (SeekerAgent Seeker in Seekers)
+            {
+                Seeker.AddReward(reward * (-1));
+                // Debug.Log(Seeker.GetCumulativeReward());
+                Seeker.EndEpisode();
+            }
+            
             HideGroup.AddGroupReward(reward);
             HideGroup.EndGroupEpisode();
             ResetEnv();
@@ -186,17 +222,28 @@ public class HideAndSeek_ppo : MonoBehaviour
 
 /*        System.Random random = new System.Random();
         GameObject obj1 = seekerPossitions[random.Next(seekerPossitions.Count)];*/
-        Vector3 pos = Seeker.startPos;
-
-        Seeker.gameObject.SetActive(false);
-        // Seeker.orientation.localPosition = Seeker.startPos;
-        Seeker.orientation.localPosition = pos;
-        fakeSeeker.transform.localPosition = pos;
-        Seeker.orientation.rotation = Quaternion.Euler(0f, 180.0f, 0f);
-        Seeker.rBody.velocity = Vector3.zero;
-        Seeker.rBody.angularVelocity = Vector3.zero;
         
-        fakeSeeker.SetActive(true);
+        List<Vector3> trans = new List<Vector3>();
+        foreach (SeekerAgent Seeker in Seekers)
+        {
+            Vector3 pos = Seeker.startPos;
+            Seeker.gameObject.SetActive(false);
+            // Seeker.orientation.localPosition = Seeker.startPos;
+            Seeker.orientation.localPosition = pos;
+            trans.Add(pos);
+            // fakeSeeker.transform.localPosition = pos;
+            Seeker.orientation.rotation = Quaternion.Euler(0f, 180.0f, 0f);
+            Seeker.rBody.velocity = Vector3.zero;
+            Seeker.rBody.angularVelocity = Vector3.zero;
+        }
+
+        foreach (GameObject fakeSeeker in fakeSeekers)
+        {
+            int idx = fakeSeekers.IndexOf(fakeSeeker);
+            fakeSeeker.transform.localPosition = trans[idx];
+            fakeSeeker.SetActive(true);
+        }
+        
     }
 
     public List<Vector3> GetRandomPositions()

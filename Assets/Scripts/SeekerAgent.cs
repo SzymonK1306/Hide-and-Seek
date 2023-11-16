@@ -14,7 +14,7 @@ public class SeekerAgent : Agent
     float verticalInput;
     Vector3 moveDirection;
     public Rigidbody rBody;
-
+    
     public Vector3 startPos;
     public Vector3 lastPos;
     float distance_total;
