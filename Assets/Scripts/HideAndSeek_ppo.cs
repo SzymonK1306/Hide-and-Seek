@@ -173,8 +173,8 @@ public class HideAndSeek_ppo : MonoBehaviour
         {
             int currentIndex = Hiders.IndexOf(hider);
             hider.gameObject.SetActive(false);
-            // hider.orientation.localPosition = hider.startPos;
-            hider.orientation.localPosition = hiderNewPos[currentIndex];
+            hider.orientation.localPosition = hider.startPos;
+            // hider.orientation.localPosition = hiderNewPos[currentIndex];
             hider.maxDistance = 0f;
             hider.orientation.rotation = Quaternion.Euler(0f, 0f, 0f);
             // hider.orientation.rotation = Quaternion.Euler(0f, 0f, 0f);
