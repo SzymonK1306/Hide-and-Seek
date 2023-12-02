@@ -10,37 +10,44 @@ public class SeekerAgent : Agent
 
     public float moveSpeed;
     public Transform orientation;
-    float horizontalInput;
-    float verticalInput;
+
     Vector3 moveDirection;
     public Rigidbody rBody;
     
+    // Params to calculate distance
     public Vector3 startPos;
     public Vector3 lastPos;
-    float distance_total;
+    public float distance_total;
+
+    public LineRenderer lineRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
        rBody = GetComponent<Rigidbody>();
-       // rBody.freezeRotation = true;
        startPos = orientation.localPosition;
        distance_total = 0;
        lastPos = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, this.transform.localPosition.z);
+
+        // Line renderer
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        // Set LineRenderer properties
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.red;
+        lineRenderer.endColor = Color.red;
+        lineRenderer.positionCount = 22;
     }
 
-    // public Transform Target;
-/*    public override void OnEpisodeBegin()
-    {
-        this.rBody.velocity = Vector3.zero;
-        // Move the target to a new spot
-        Vector3 startPosition = startPos;
-        Quaternion randomRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-
-        orientation.position = startPosition;
-        orientation.rotation = randomRotation;
-    }*/
-
+    /// <summary>
+    /// Define observations (except lidar)
+    /// </summary>
     public override void CollectObservations(VectorSensor sensor)
     {
         // Position
@@ -51,17 +58,11 @@ public class SeekerAgent : Agent
         sensor.AddObservation(rBody.velocity.z);
 
     }
+    /// <summary>
+    /// Define actions
+    /// </summary>
     public override void OnActionReceived(ActionBuffers actions)
     {
-
-        // Vector3 controlSignal = Vector3.zero;
-        // controlSignal.x = actions.ContinuousActions[0];
-        // controlSignal.z = actions.ContinuousActions[1];
-        // rBody.AddForce(controlSignal * forceMultiplier);
-        // Get the continuous actions.
-        //Debug.Log(this.GetCumulativeReward());
-        //Debug.Log(this.StepCount);
-
         float moveX = actions.ContinuousActions[0]; // Move left or right.
         float moveY = actions.ContinuousActions[1]; // Move forward or backward.
         float rotate = actions.ContinuousActions[2]; // Rotate clockwise or counterclockwise.
@@ -74,40 +75,17 @@ public class SeekerAgent : Agent
 
         // Apply rotation to the agent.
         transform.Rotate(Vector3.up * rotate * Time.fixedDeltaTime * 100f);
-        distance_total += Vector3.Distance(this.transform.localPosition, lastPos) / 20;
+        distance_total += Vector3.Distance(this.transform.localPosition, lastPos);
         AddReward(Vector3.Distance(this.transform.localPosition, lastPos) / 5);
         lastPos = new Vector3(this.transform.localPosition.x, this.transform.localPosition.y, this.transform.localPosition.z);
-        // Debug.Log("Last Position: " + distance_total);
-/*        Debug.Log("Current Position: " + this.transform.localPosition);
-        Debug.Log("Distance: " + Vector3.Distance(this.transform.localPosition, lastPos));*/
-
-
-
-
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        // Punish for colliding walls
-/*        if (collision.gameObject.CompareTag("Wall"))
-        {
-            AddReward(-1.0f);
-        }*/
-/*        if (collision.gameObject.CompareTag("Hider"))
-        {
-            AddReward(50.0f);
-        }*/
-    }  
-
-
+    /// <summary>
+    /// Heristic control of Agent - usefull in debug
+    /// </summary>
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActions = actionsOut.ContinuousActions;
-
-        // Reset continuous actions.
-        // continuousActions[0] = Input.GetAxis("Horizontal"); // Horizontal movement (A/D)
-        // continuousActions[1] = Input.GetAxis("Vertical");   // Vertical movement (W/S)
-        // continuousActions[2] = Input.GetAxis("Rotate");     // Rotation (E/Q)
         
         // Reset continuous actions.
         continuousActions[0] = 0f; // Horizontal movement (A/D)

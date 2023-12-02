@@ -1,0 +1,123 @@
+{
+    "HiderBehavior": {
+        "checkpoints": [
+            {
+                "steps": 17499968,
+                "file_path": "results\\HideSeek18\\HiderBehavior\\HiderBehavior-17499968.onnx",
+                "reward": 4.314034448831745,
+                "creation_time": 1700203993.00039,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\HiderBehavior\\HiderBehavior-17499968.pt"
+                ]
+            },
+            {
+                "steps": 17999959,
+                "file_path": "results\\HideSeek18\\HiderBehavior\\HiderBehavior-17999959.onnx",
+                "reward": 4.682156733477988,
+                "creation_time": 1700204967.6925237,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\HiderBehavior\\HiderBehavior-17999959.pt"
+                ]
+            },
+            {
+                "steps": 18249668,
+                "file_path": "results\\HideSeek18\\HiderBehavior\\HiderBehavior-18249668.onnx",
+                "reward": 4.721907285814473,
+                "creation_time": 1700205254.9879308,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\HiderBehavior\\HiderBehavior-18249668.pt"
+                ]
+            },
+            {
+                "steps": 18499977,
+                "file_path": "results\\HideSeek18\\HiderBehavior\\HiderBehavior-18499977.onnx",
+                "reward": 4.715344551080031,
+                "creation_time": 1700208198.5211813,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\HiderBehavior\\HiderBehavior-18499977.pt"
+                ]
+            },
+            {
+                "steps": 18721543,
+                "file_path": "results\\HideSeek18\\HiderBehavior\\HiderBehavior-18721543.onnx",
+                "reward": 4.693456055860329,
+                "creation_time": 1700208437.7469742,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\HiderBehavior\\HiderBehavior-18721543.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 18721543,
+            "file_path": "results\\HideSeek18\\HiderBehavior.onnx",
+            "reward": 4.693456055860329,
+            "creation_time": 1700208437.7469742,
+            "auxillary_file_paths": [
+                "results\\HideSeek18\\HiderBehavior\\HiderBehavior-18721543.pt"
+            ]
+        }
+    },
+    "SeekerBehavior": {
+        "checkpoints": [
+            {
+                "steps": 10999986,
+                "file_path": "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-10999986.onnx",
+                "reward": 159.68047738075256,
+                "creation_time": 1700202456.6072404,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-10999986.pt"
+                ]
+            },
+            {
+                "steps": 11499944,
+                "file_path": "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-11499944.onnx",
+                "reward": 155.7628102004528,
+                "creation_time": 1700203696.5757675,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-11499944.pt"
+                ]
+            },
+            {
+                "steps": 11999992,
+                "file_path": "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-11999992.onnx",
+                "reward": 117.54502961039543,
+                "creation_time": 1700204965.4885857,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-11999992.pt"
+                ]
+            },
+            {
+                "steps": 12169078,
+                "file_path": "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-12169078.onnx",
+                "reward": 100.94361684824291,
+                "creation_time": 1700205254.6057801,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-12169078.pt"
+                ]
+            },
+            {
+                "steps": 12483482,
+                "file_path": "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-12483482.onnx",
+                "reward": 128.89081434184504,
+                "creation_time": 1700208437.9117756,
+                "auxillary_file_paths": [
+                    "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-12483482.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 12483482,
+            "file_path": "results\\HideSeek18\\SeekerBehavior.onnx",
+            "reward": 128.89081434184504,
+            "creation_time": 1700208437.9117756,
+            "auxillary_file_paths": [
+                "results\\HideSeek18\\SeekerBehavior\\SeekerBehavior-12483482.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.0.1+cu117"
+    }
+}

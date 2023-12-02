@@ -11,21 +11,13 @@ public class HiderAgent : Agent
 
     public float moveSpeed;
     public Transform orientation;
-    float horizontalInput;
-    float verticalInput;
+
     Vector3 moveDirection;
     public Rigidbody rBody;
-    private Collider agentCollider;
-    private MeshRenderer meshRenderer;
     public float maxDistance = 0f;
 
-/*    private bool wallCollision = false;
-    private bool seekerCollision = false;
-
-    private bool active = true;*/
-
     public Vector3 startPos;
-    // private Vector3 lastPos;
+    public LineRenderer lineRenderer;
 
     // Start is called before the first frame update
     void Start()
@@ -33,27 +25,25 @@ public class HiderAgent : Agent
         rBody = GetComponent<Rigidbody>();
         startPos = this.transform.localPosition;
         maxDistance = 0f;
-        /*        agentCollider = GetComponent<Collider>();
-                meshRenderer = GetComponent<MeshRenderer>();*/
-        // rBody.freezeRotation = true;
+
+        // Line renderer
+        lineRenderer = GetComponent<LineRenderer>();
+        if (lineRenderer == null)
+        {
+            lineRenderer = gameObject.AddComponent<LineRenderer>();
+        }
+
+        // Set LineRenderer properties
+        lineRenderer.startWidth = 0.1f;
+        lineRenderer.endWidth = 0.1f;
+        lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
+        lineRenderer.startColor = Color.blue;
+        lineRenderer.endColor = Color.blue;
+        lineRenderer.positionCount = 22;
     }
-
-    // public Transform Target;
-/*    public override void OnEpisodeBegin()
-    {
-        this.rBody.velocity = Vector3.zero;
-        // Move the target to a new spot
-        Vector3 startPosition = startPos;
-        Quaternion randomRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-
-        //rBody.enabled = true;
-*//*        agentCollider.enabled = true;
-        meshRenderer.enabled = true;*//*
-
-        orientation.position = startPosition;
-        orientation.rotation = randomRotation;
-    }*/
-
+    /// <summary>
+    /// Define observations (except lidar)
+    /// </summary>
     public override void CollectObservations(VectorSensor sensor)
     {
         // Position
@@ -64,21 +54,12 @@ public class HiderAgent : Agent
         sensor.AddObservation(rBody.velocity.z);
 
     }
+    /// <summary>
+    /// Define actions
+    /// </summary>
     public override void OnActionReceived(ActionBuffers actions)
     {
 
-        // Vector3 controlSignal = Vector3.zero;
-        // controlSignal.x = actions.ContinuousActions[0];
-        // controlSignal.z = actions.ContinuousActions[1];
-        // rBody.AddForce(controlSignal * forceMultiplier);
-        // Get the continuous actions.
-        // Debug.Log(this.GetCumulativeReward());
-        // Debug.Log(this.StepCount);
-
-        // DISTANCE REWARD
-/*        Vector3 currentPosition = transform.localPosition;
-        float distance = Vector3.Distance(lastPos, currentPosition);
-        Debug.Log(distance);*/
 
         float moveX = actions.ContinuousActions[0]; // Move left or right.
         float moveY = actions.ContinuousActions[1]; // Move forward or backward.
@@ -98,39 +79,14 @@ public class HiderAgent : Agent
 
         // Apply rotation to the agent.
         transform.Rotate(Vector3.up * rotate * Time.fixedDeltaTime * 100f);
-
-        //lastPos = currentPosition;
-  
-
-
     }
 
-    void OnCollisionEnter(Collision collision)
-    {
-        // Punish for colliding walls
-/*        if (collision.gameObject.CompareTag("Wall"))
-        {
-            AddReward(-1.0f);
-        }*/
-/*        if (collision.gameObject.CompareTag("Seeker"))
-        {
-            active = false;
-            AddReward(-50.0f);
-            //rBody.enabled = false;
-            agentCollider.enabled = false;
-            meshRenderer.enabled = false;
-        }*/
-    }  
-
-
+    /// <summary>
+    /// Heristic control of Agent - usefull in debug
+    /// </summary>
     public override void Heuristic(in ActionBuffers actionsOut)
     {
         var continuousActions = actionsOut.ContinuousActions;
-
-        // Reset continuous actions.
-        // continuousActions[0] = Input.GetAxis("Horizontal"); // Horizontal movement (A/D)
-        // continuousActions[1] = Input.GetAxis("Vertical");   // Vertical movement (W/S)
-        // continuousActions[2] = Input.GetAxis("Rotate");     // Rotation (E/Q)
         
         // Reset continuous actions.
         continuousActions[0] = 0f; // Horizontal movement (A/D)
@@ -166,13 +122,12 @@ public class HiderAgent : Agent
         }
 
     }
-
+    /// <summary>
+    /// Add distance reward
+    /// </summary>
     public void calculateDistReward()
     {
-        //float totalDistance = Vector3.Distance(this.transform.localPosition, startPos);
-        // Debug.Log(totalDistance);
-        // Debug.Log(maxDistance);
-        AddReward(maxDistance / 2f);
+        AddReward(maxDistance);
     }
 }
 
