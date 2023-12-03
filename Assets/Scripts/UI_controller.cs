@@ -354,7 +354,7 @@ public class UI_controller : MonoBehaviour
             hider.gameObject.SetActive(false);
             if (const_pos)
             {
-                hider.orientation.localPosition = hider.startPos;
+                hider.orientation.localPosition = hiderPossitions[currentIndex].transform.localPosition;
             }
             else
             {

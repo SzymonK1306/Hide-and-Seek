@@ -2273,7 +2273,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: c7fb822f698c0d54f80c08126f1e5043, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 748aa41023ee2f34485030e6f8420d26, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: HiderBehavior
@@ -3035,7 +3035,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: c7fb822f698c0d54f80c08126f1e5043, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 748aa41023ee2f34485030e6f8420d26, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: HiderBehavior
@@ -3557,7 +3557,7 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: 5280b478883097b4ebff21d95b020074, type: 3}
+  m_Model: {fileID: 5022602860645237092, guid: 96fd0fc3b34a81f4eafc9071a518f9e1, type: 3}
   m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: SeekerBehavior
@@ -3584,7 +3584,7 @@ MonoBehaviour:
   moveSpeed: 10
   orientation: {fileID: 4425809413044947068}
   rBody: {fileID: 1847416269406990258}
-  startPos: {x: 0, y: 1, z: -16.5}
+  startPos: {x: 0, y: 1, z: -11}
   lastPos: {x: 0, y: 0, z: 0}
   distance_total: 0
   lineRenderer: {fileID: 0}
@@ -5886,6 +5886,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da48488899eda124685a35737e196d7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameModeToggles: []
   Hiders:
   - {fileID: 7896546143763455030}
   - {fileID: 5025037327904762891}
